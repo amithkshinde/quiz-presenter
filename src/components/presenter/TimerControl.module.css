@@ -1,0 +1,40 @@
+.wrap {
+  display: flex; align-items: center; justify-content: space-between; background: var(--c-panel-2);
+  border: 1px solid var(--c-border); border-radius: 8px; padding: 8px 14px;
+}
+.readout { display: flex; flex-direction: column; gap: 5px; flex: 1; margin-right: 14px; }
+.time { font-family: var(--font-marquee); font-size: 1.4rem; color: var(--primary-500); font-variant-numeric: tabular-nums; display: inline-block; }
+.time.warning { color: var(--warning); }
+.time.critical { color: var(--error); }
+.time.warning.ticking, .time.critical.ticking { animation: beat 450ms var(--ease-spring); }
+.time.expired { color: var(--error); font-size: 1rem; letter-spacing: 0.02em; }
+.time.paused { opacity: 0.75; }
+.time.paused:not(.warning):not(.critical) { color: var(--c-ink-dim); }
+
+.track { width: 100%; max-width: 160px; height: 3px; border-radius: 99px; background: var(--c-border); overflow: hidden; }
+.fill { height: 100%; background: var(--primary-500); border-radius: 99px; transition: width 1s linear, background-color var(--duration-base) var(--ease-out); }
+.fillWarning { background: var(--warning); }
+.fillCritical { background: var(--error); }
+
+.controls { display: flex; align-items: center; gap: 10px; }
+/* Start/Resume is the primary, frequent action here — sized generously and on-brand.
+   Reset is deliberately smaller and quieter so a fast tap can't land on it by mistake. */
+.btn {
+  width: 40px; height: 40px; border-radius: 8px; background: var(--primary-500); border: 1px solid var(--primary-500);
+  color: #2a1e05; cursor: pointer; font-size: 0.85rem; display: flex; align-items: center; justify-content: center;
+}
+.btn:hover { background: var(--primary-300); }
+.btnGhost {
+  width: 32px; height: 32px; border-radius: 8px; background: transparent; border: 1px solid var(--c-border-strong);
+  color: var(--c-ink-faint); cursor: pointer; font-size: 0.72rem; display: flex; align-items: center; justify-content: center;
+}
+.btnGhost:hover { color: var(--c-ink-dim); border-color: var(--c-ink-dim); }
+
+@keyframes beat {
+  0% { transform: scale(1); }
+  35% { transform: scale(1.1); }
+  100% { transform: scale(1); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .time.warning, .time.critical { animation: none; }
+}

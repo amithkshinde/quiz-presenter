@@ -1,0 +1,21 @@
+.page { max-width: 1080px; margin: 0 auto; padding: var(--space-12) var(--space-8) var(--space-16); }
+.header { display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: var(--space-12); gap: var(--space-4); flex-wrap: wrap; }
+.h1 { font-size: 2rem; }
+.sub { color: var(--ink-dim); margin-top: var(--space-2); }
+
+.grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: var(--space-6); }
+.card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: var(--space-6); box-shadow: var(--shadow); display: flex; flex-direction: column; gap: var(--space-2); }
+.cardTop { display: flex; justify-content: space-between; align-items: flex-start; gap: var(--space-2); }
+.cardTitle { font-size: 1.1rem; }
+.meta { font-size: 0.82rem; color: var(--ink-dim); }
+.reason { font-size: 0.78rem; color: var(--warning); }
+.actions { display: flex; gap: var(--space-2); flex-wrap: wrap; margin-top: var(--space-2); }
+.demoActions {
+  display: flex; gap: var(--space-2); flex-wrap: wrap; padding: var(--space-3);
+  background: var(--surface-2); border: 1px dashed var(--border-strong); border-radius: var(--radius-md); margin-top: var(--space-1);
+}
+
+.createOverlay { position: fixed; inset: 0; background: rgba(10,12,17,.5); display: flex; align-items: center; justify-content: center; z-index: 100; padding: var(--space-4); }
+.createModal { background: var(--surface); border-radius: var(--radius-lg); padding: var(--space-6); width: 100%; max-width: 380px; box-shadow: 0 20px 60px -20px rgba(0,0,0,.4); display: flex; flex-direction: column; gap: var(--space-4); }
+.input { border: 1px solid var(--border-strong); border-radius: var(--radius-sm); padding: 10px 12px; font-size: 0.9rem; font-family: var(--font-sans); }
+.createActions { display: flex; justify-content: flex-end; gap: var(--space-2); }

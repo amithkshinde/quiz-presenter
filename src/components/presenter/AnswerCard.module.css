@@ -1,0 +1,29 @@
+.card { background: var(--c-panel-2); border: 1px solid var(--c-border); border-radius: 10px; padding: 14px 16px; flex: 1.3; transition: border-color var(--duration-base) var(--ease-out); }
+.card.live { border-color: var(--error); animation: card-settle var(--duration-slow) var(--ease-out); }
+.head { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; }
+.label { font-family: var(--font-mono); font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.05em; color: var(--c-ink-faint); }
+.led { width: 8px; height: 8px; border-radius: 50%; transition: background-color var(--duration-base); }
+.ledStandby { background: var(--c-ink-faint); }
+.ledLive { background: var(--error); box-shadow: 0 0 8px var(--error); animation: led-pop var(--duration-base) var(--ease-spring); }
+.body { font-size: 1rem; color: var(--c-ink); margin: 0 0 10px; font-weight: 600; }
+.status { font-family: var(--font-mono); font-size: 0.72rem; color: var(--error); letter-spacing: 0.03em; animation: fade-in var(--duration-base) var(--ease-out); }
+
+@keyframes card-settle { 0% { box-shadow: 0 0 0 rgba(213, 69, 58, 0); } 40% { box-shadow: 0 0 18px rgba(213, 69, 58, 0.35); } 100% { box-shadow: 0 0 0 rgba(213, 69, 58, 0); } }
+@keyframes led-pop { 0% { transform: scale(0.4); } 60% { transform: scale(1.3); } 100% { transform: scale(1); } }
+@keyframes fade-in { from { opacity: 0; } to { opacity: 1; } }
+@media (prefers-reduced-motion: reduce) { .card.live, .ledLive, .status { animation: none; } }
+
+.reveal {
+  position: relative; overflow: hidden; font-family: var(--font-mono); font-size: 0.72rem; letter-spacing: 0.03em;
+  background: transparent; color: var(--c-ink-dim); border: 1px solid var(--c-border-strong);
+  border-radius: 6px; padding: 10px 14px; min-height: 40px; cursor: pointer; user-select: none;
+}
+/* Gold only appears once a reveal is actually in progress — at rest this control
+   stays neutral so it never competes with "Next" for the eye. See UX review §1. */
+.reveal.armed { background: rgba(240, 180, 41, 0.12); border-color: var(--primary-500); color: var(--primary-500); }
+.reveal.holding::before {
+  content: ''; position: absolute; inset: 0; left: 0; background: rgba(240, 180, 41, 0.35);
+  animation: fill 650ms linear forwards;
+}
+@keyframes fill { from { width: 0; } to { width: 100%; } }
+@media (prefers-reduced-motion: reduce) { .reveal.holding::before { animation: none; width: 100%; transition: none; } }

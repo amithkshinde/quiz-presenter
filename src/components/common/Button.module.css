@@ -1,0 +1,33 @@
+.btn {
+  font-family: var(--font-sans);
+  font-weight: 600;
+  border-radius: var(--radius-sm);
+  border: 1px solid transparent;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  transition: background var(--duration-fast) var(--ease-out), border-color var(--duration-fast) var(--ease-out), opacity var(--duration-fast);
+  white-space: nowrap;
+}
+.btn:disabled { opacity: 0.5; cursor: not-allowed; }
+.md { padding: 10px 20px; font-size: 0.92rem; }
+.sm { padding: 6px 12px; font-size: 0.82rem; }
+
+.primary { background: var(--primary-500); color: #2a1e05; }
+.primary:hover:not(:disabled) { background: var(--primary-300); }
+
+.secondary { background: transparent; border-color: var(--border-strong); color: var(--ink); }
+.secondary:hover:not(:disabled) { background: var(--surface-2); }
+
+.ghost { background: transparent; color: var(--secondary-500); }
+.ghost:hover:not(:disabled) { background: var(--secondary-50); }
+
+.danger { background: transparent; border-color: var(--error); color: var(--error); }
+.danger:hover:not(:disabled) { background: var(--error-soft); }
+
+/* fixed-dark contexts override via inherited tokens automatically since
+   .console-scope / .stage-scope redefine --surface-2 equivalents is not done;
+   Console/Stage use their own local classes instead of this generic Button
+   for on-brand controls (see PresenterConsole/PresentationStage styles). */

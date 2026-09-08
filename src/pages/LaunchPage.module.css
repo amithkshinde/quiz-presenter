@@ -1,0 +1,15 @@
+.page { max-width: 640px; margin: 0 auto; padding: var(--space-12) var(--space-6) var(--space-16); }
+.back { font-size: 0.8rem; color: var(--ink-dim); }
+.h1 { font-size: 1.8rem; margin-top: var(--space-3); }
+.sub { color: var(--ink-dim); margin-top: var(--space-2); margin-bottom: var(--space-8); }
+
+.checklist { display: flex; flex-direction: column; gap: var(--space-3); margin-bottom: var(--space-6); }
+.item { display: flex; align-items: center; gap: var(--space-3); font-size: 0.92rem; }
+.dot { width: 10px; height: 10px; border-radius: 50%; flex: none; }
+.dotOk { background: var(--success); }
+.dotMissing { background: var(--error); }
+.dotOptional { background: var(--border-strong); }
+
+.blocked { color: var(--warning); font-size: 0.88rem; margin-bottom: var(--space-6); }
+.actions { display: flex; gap: var(--space-3); flex-wrap: wrap; }
+.hint { color: var(--ink-faint); font-size: 0.8rem; margin-top: var(--space-4); }

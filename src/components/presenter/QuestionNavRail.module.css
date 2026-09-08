@@ -1,0 +1,9 @@
+.list { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 2px; overflow-y: auto; height: 100%; }
+.row { display: flex; align-items: center; gap: 8px; width: 100%; background: none; border: none; border-left: 2px solid transparent; padding: 8px 10px; cursor: pointer; text-align: left; border-radius: 6px; }
+.row:hover { background: var(--c-panel-2); }
+.current { background: var(--c-panel-2); border-left-color: var(--secondary-300); }
+.dot { width: 6px; height: 6px; border-radius: 50%; background: var(--c-border-strong); flex: none; }
+.dotCurrent { background: var(--secondary-300); box-shadow: 0 0 6px var(--secondary-300); }
+.dotDone { background: var(--success-bright); }
+.label { font-family: var(--font-mono); font-size: 0.74rem; color: var(--c-ink-dim); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.current .label { color: var(--c-ink); }

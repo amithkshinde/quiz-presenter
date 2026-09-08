@@ -1,0 +1,25 @@
+.list { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: var(--space-2); }
+.row {
+  display: flex; align-items: center; gap: var(--space-2);
+  background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-md);
+  padding: var(--space-2) var(--space-3);
+}
+.handle { cursor: grab; color: var(--ink-faint); }
+.reorderBtn { background: none; border: 1px solid var(--border); border-radius: 6px; width: 24px; height: 24px; color: var(--ink-dim); cursor: pointer; }
+.reorderBtn:disabled { opacity: 0.3; cursor: not-allowed; }
+.index { font-family: var(--font-mono); color: var(--ink-faint); font-size: 0.8rem; width: 20px; text-align: center; }
+.main { flex: 1; display: flex; flex-direction: column; gap: 6px; text-align: left; background: none; border: none; padding: var(--space-2) var(--space-3); cursor: pointer; border-radius: var(--radius-sm); }
+.main:hover { background: var(--surface-2); }
+.qtext { font-size: 0.92rem; color: var(--ink); }
+.placeholder { color: var(--ink-faint); font-style: italic; }
+.metaRow { display: flex; gap: 6px; flex-wrap: wrap; }
+.rowActions { display: flex; gap: 4px; flex-shrink: 0; }
+
+.footer { margin-top: var(--space-4); }
+.addMenuWrap { position: relative; display: inline-block; }
+.addMenu {
+  position: absolute; top: calc(100% + 6px); left: 0; background: var(--surface); border: 1px solid var(--border);
+  border-radius: var(--radius-md); box-shadow: var(--shadow); display: flex; flex-direction: column; min-width: 180px; z-index: 20; overflow: hidden;
+}
+.addMenu button { text-align: left; padding: 10px 14px; border: none; background: none; cursor: pointer; font-size: 0.86rem; color: var(--ink); }
+.addMenu button:hover { background: var(--surface-2); }

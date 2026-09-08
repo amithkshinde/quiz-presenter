@@ -1,0 +1,12 @@
+.wrap { display: flex; flex-direction: column; gap: 12px; }
+.meta { display: flex; gap: 8px; }
+.tag { font-family: var(--font-mono); font-size: 0.7rem; padding: 3px 10px; border-radius: 99px; background: var(--c-panel-2); border: 1px solid var(--c-border); color: var(--c-ink-dim); }
+.media { max-width: 100%; max-height: 220px; object-fit: cover; border-radius: 8px; border: 1px solid var(--c-border); }
+.text { font-family: var(--font-sans); font-size: 1.5rem; font-weight: 600; color: var(--c-ink); line-height: 1.35; margin: 0; }
+.placeholder { color: var(--c-ink-faint); font-weight: 400; }
+.options { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+.option { display: flex; align-items: center; gap: 8px; background: var(--c-panel-2); border: 1px solid var(--c-border); border-radius: 8px; padding: 10px 14px; font-size: 0.94rem; color: var(--c-ink-dim); }
+.option.correct { border-color: var(--success-bright); color: var(--c-ink); }
+.letter { font-family: var(--font-mono); width: 20px; height: 20px; border-radius: 50%; border: 1px solid var(--c-border); display: flex; align-items: center; justify-content: center; font-size: 0.68rem; flex: none; }
+.correctTag { margin-left: auto; font-family: var(--font-mono); font-size: 0.68rem; color: var(--success-bright); }
+.liveNote { font-family: var(--font-mono); font-size: 0.7rem; color: var(--error); }

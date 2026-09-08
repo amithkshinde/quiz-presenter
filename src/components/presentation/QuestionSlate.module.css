@@ -1,0 +1,79 @@
+.wrap { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; padding: 4cqw 6cqw 3cqw; }
+.topbar { display: flex; justify-content: space-between; align-items: center; width: 100%; }
+.meta { display: flex; gap: 0.8cqw; align-items: center; }
+.tag {
+  font-family: var(--font-marquee); font-size: 1.3cqw; letter-spacing: 0.05em;
+  padding: 0.4cqw 1.4cqw; border-radius: 99px; border: 1px solid var(--s-line); color: var(--s-ink-dim);
+}
+.tagStrong { color: var(--s-ink); border-color: var(--s-gold); }
+
+.timerResolved { opacity: 0; transition: opacity var(--duration-base) var(--ease-out); }
+
+.mediaWrap { width: 100%; max-width: 60cqw; margin-top: 1.5cqw; }
+.media { width: 100%; max-height: 26cqw; object-fit: cover; border-radius: 10px; border: 1px solid var(--s-line); display: block; }
+
+.question {
+  font-family: var(--font-display); font-weight: 600; font-size: 4.4cqw; line-height: 1.2; text-align: center;
+  max-width: 24ch; color: var(--s-ink); margin: 2.4cqw 0 2.6cqw; text-wrap: balance;
+}
+
+.options { display: grid; grid-template-columns: 1fr 1fr; gap: 1.2cqw; width: 100%; max-width: 62cqw; }
+.option {
+  display: flex; align-items: center; gap: 1.2cqw; background: var(--s-bg-2); border: 1px solid var(--s-line);
+  border-radius: 10px; padding: 1.2cqw 1.6cqw;
+  transition: opacity var(--duration-slow) var(--ease-out) 180ms, filter var(--duration-slow) var(--ease-out) 180ms, border-color var(--duration-base) var(--ease-out), background-color var(--duration-base) var(--ease-out);
+}
+.letter {
+  font-family: var(--font-marquee); font-size: 1.6cqw; width: 2.6cqw; height: 2.6cqw; border-radius: 50%;
+  border: 1.5px solid var(--s-line); display: flex; align-items: center; justify-content: center; color: var(--s-ink-dim); flex: none;
+  transition: border-color var(--duration-base) var(--ease-out), color var(--duration-base) var(--ease-out);
+}
+.optText { font-size: 1.5cqw; color: var(--s-ink); }
+/* The correct option settles first (no delay) with a single glow bloom; the
+   others recede a beat later so the eye has already landed before they dim. */
+.correct { border-color: var(--s-correct); background: var(--s-correct-soft); animation: glow-once var(--duration-slower) var(--ease-out) 120ms backwards; }
+.correct .letter { border-color: var(--s-correct); color: var(--s-correct); }
+.dim { opacity: 0.4; filter: grayscale(0.4); }
+.check {
+  margin-left: auto; font-family: var(--font-marquee); font-size: 1.2cqw; color: var(--s-correct); letter-spacing: 0.04em;
+  opacity: 0; animation: fade-in var(--duration-base) var(--ease-out) 420ms forwards;
+}
+
+.answerPanel {
+  display: flex; flex-direction: column; align-items: center; gap: 0.6cqw; background: var(--s-correct-soft);
+  border: 1.5px solid var(--s-correct); border-radius: 12px; padding: 1.6cqw 3cqw;
+  animation: glow-once var(--duration-slower) var(--ease-out) 120ms backwards;
+}
+.answerLabel { font-family: var(--font-marquee); font-size: 1.2cqw; letter-spacing: 0.1em; color: var(--s-correct); }
+.answerText { font-family: var(--font-display); font-size: 2.6cqw; color: var(--s-ink); font-weight: 600; }
+
+.hint {
+  margin-top: 1.6cqw; display: flex; align-items: center; gap: 1cqw; background: var(--s-gold-soft);
+  border: 1px solid var(--s-gold); border-radius: 10px; padding: 1cqw 1.8cqw; max-width: 62cqw; width: 100%;
+  animation: hint-in var(--duration-slow) var(--ease-out);
+}
+.hintLabel {
+  font-family: var(--font-marquee); font-size: 1.2cqw; letter-spacing: 0.1em; color: var(--s-gold); flex: none;
+  display: inline-flex; align-items: center; gap: 0.5cqw;
+}
+.hintLabel::before { content: ''; width: 0.5cqw; height: 0.5cqw; border-radius: 50%; background: var(--s-gold); }
+.hintText { font-size: 1.4cqw; color: var(--s-ink); opacity: 0; animation: fade-in var(--duration-base) var(--ease-out) 160ms forwards; }
+
+@keyframes hint-in {
+  0% { opacity: 0; transform: translateY(10px); box-shadow: 0 0 0 rgba(240, 180, 41, 0); }
+  55% { opacity: 1; transform: translateY(0); }
+  70% { box-shadow: 0 0 2.4cqw rgba(240, 180, 41, 0.35); }
+  100% { box-shadow: 0 0 0 rgba(240, 180, 41, 0); }
+}
+@keyframes glow-once {
+  0% { box-shadow: 0 0 0 rgba(87, 192, 138, 0); }
+  35% { box-shadow: 0 0 2.6cqw rgba(87, 192, 138, 0.45); }
+  100% { box-shadow: 0 0 0 rgba(87, 192, 138, 0); }
+}
+@keyframes fade-in { from { opacity: 0; } to { opacity: 1; } }
+
+@media (prefers-reduced-motion: reduce) {
+  .hint, .correct, .answerPanel { animation: none; }
+  .check, .hintText { animation: none; opacity: 1; }
+  .option { transition: none; }
+}

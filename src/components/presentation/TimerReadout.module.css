@@ -1,0 +1,46 @@
+.wrap {
+  display: flex; flex-direction: column; align-items: center; gap: 0.5cqw;
+  border: 2px solid var(--s-line); border-radius: 12px; padding: 0.6cqw 1.6cqw;
+  transition: border-color var(--duration-base) var(--ease-out);
+}
+.num {
+  font-family: var(--font-marquee); font-size: 3.4cqw; letter-spacing: 0.02em; color: var(--s-gold);
+  font-variant-numeric: tabular-nums; display: inline-block;
+}
+.track { width: 100%; height: 3px; border-radius: 99px; background: var(--s-line); overflow: hidden; }
+.fill { height: 100%; background: var(--s-gold); border-radius: 99px; transition: width 1s linear, background-color var(--duration-base) var(--ease-out); }
+
+.warning { border-color: var(--s-warning); }
+.warning .num, .warning .fill { color: var(--s-warning); background: var(--s-warning); }
+.warning.ticking .num { animation: beat 500ms var(--ease-spring); }
+
+.critical { border-color: var(--error); }
+.critical .num, .critical .fill { color: var(--error); background: var(--error); }
+.critical.ticking .num { animation: beat 500ms var(--ease-spring); }
+
+.expired { border-color: var(--error); }
+.expiredLabel {
+  font-family: var(--font-marquee); font-size: 1.8cqw; letter-spacing: 0.1em; color: var(--error);
+  animation: flash-once 500ms var(--ease-out);
+}
+
+/* Paused dims the readout a touch either way, but a paused clock that's
+   still urgent (low time left) keeps its warning/critical colour — pausing
+   isn't the same as "back to normal." */
+.paused .num, .paused .fill { opacity: 0.75; }
+.wrap.paused:not(.warning):not(.critical) .num { color: var(--s-ink-dim); }
+.wrap.paused:not(.warning):not(.critical) .fill { background: var(--s-ink-dim); }
+
+@keyframes beat {
+  0% { transform: scale(1); }
+  35% { transform: scale(1.14); }
+  100% { transform: scale(1); }
+}
+@keyframes flash-once {
+  0% { opacity: 0; transform: scale(0.9); }
+  40% { opacity: 1; transform: scale(1.06); }
+  100% { opacity: 1; transform: scale(1); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .warning .num, .critical .num, .expiredLabel { animation: none; }
+}
