@@ -1,0 +1,9 @@
+.wrap {
+  position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center;
+  gap: 2.2cqw; text-align: center; padding: 6cqw;
+}
+.kicker { font-family: var(--font-marquee); font-size: 2.2cqw; letter-spacing: 0.35em; color: var(--s-gold); }
+.title { font-family: var(--font-display); font-size: 6cqw; font-weight: 600; color: var(--s-ink); text-wrap: balance; }
+.sub { font-family: var(--font-sans); font-size: 1.6cqw; color: var(--s-ink-dim); letter-spacing: 0.04em; }
+.teams { display: flex; gap: 1cqw; flex-wrap: wrap; justify-content: center; margin-top: 1cqw; }
+.chip { border: 1px solid var(--s-line); background: var(--s-bg-2); border-radius: 99px; padding: 0.8cqw 2cqw; font-size: 1.3cqw; color: var(--s-ink-dim); }

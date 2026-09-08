@@ -1,0 +1,15 @@
+.badge {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  font-weight: 600;
+  padding: 3px 9px;
+  border-radius: 99px;
+  letter-spacing: 0.02em;
+  white-space: nowrap;
+}
+.primary { background: var(--primary-100); color: var(--primary-700); }
+.secondary { background: var(--secondary-100); color: var(--secondary-600); }
+.success { background: var(--success-soft); color: var(--success); }
+.warning { background: var(--warning-soft); color: var(--warning); }
+.error { background: var(--error-soft); color: var(--error); }
+.neutral { background: var(--surface-2); color: var(--ink-dim); }
