@@ -11,6 +11,10 @@
 
 .mediaWrap { width: 100%; max-width: 60cqw; margin-top: 1.5cqw; }
 .media { width: 100%; max-height: 26cqw; object-fit: cover; border-radius: 10px; border: 1px solid var(--s-line); display: block; }
+.mediaFallback {
+  width: 100%; height: 14cqw; display: flex; align-items: center; justify-content: center; border-radius: 10px;
+  border: 1px dashed var(--s-line); background: var(--s-bg-2); color: var(--s-ink-dim); font-size: 1.3cqw;
+}
 
 .question {
   font-family: var(--font-display); font-weight: 600; font-size: 4.4cqw; line-height: 1.2; text-align: center;
@@ -59,6 +63,14 @@
 .hintLabel::before { content: ''; width: 0.5cqw; height: 0.5cqw; border-radius: 50%; background: var(--s-gold); }
 .hintText { font-size: 1.4cqw; color: var(--s-ink); opacity: 0; animation: fade-in var(--duration-base) var(--ease-out) 160ms forwards; }
 
+.explanation {
+  margin-top: 1cqw; display: flex; align-items: center; gap: 1cqw; background: var(--s-bg-2);
+  border: 1px solid var(--s-line); border-radius: 10px; padding: 1cqw 1.8cqw; max-width: 62cqw; width: 100%;
+  opacity: 0; animation: fade-in var(--duration-slow) var(--ease-out) 220ms forwards;
+}
+.explanationLabel { font-family: var(--font-marquee); font-size: 1.2cqw; letter-spacing: 0.1em; color: var(--s-ink-dim); flex: none; }
+.explanationText { font-size: 1.3cqw; color: var(--s-ink-dim); }
+
 @keyframes hint-in {
   0% { opacity: 0; transform: translateY(10px); box-shadow: 0 0 0 rgba(240, 180, 41, 0); }
   55% { opacity: 1; transform: translateY(0); }
@@ -73,7 +85,7 @@
 @keyframes fade-in { from { opacity: 0; } to { opacity: 1; } }
 
 @media (prefers-reduced-motion: reduce) {
-  .hint, .correct, .answerPanel { animation: none; }
+  .hint, .correct, .answerPanel, .explanation { animation: none; opacity: 1; }
   .check, .hintText { animation: none; opacity: 1; }
   .option { transition: none; }
 }

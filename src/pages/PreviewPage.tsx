@@ -2,26 +2,35 @@ import { useMemo, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import { useQuizStore } from '../state/quizStore';
 import { standings as computeStandings } from '../utils/scoring';
+import { getRoundInfo } from '../utils/rounds';
 import { PresentationStage, type PresentationViewModel } from '../components/presentation/PresentationStage';
+import { PresenterPreviewPanel } from '../components/presenter/PresenterPreviewPanel';
 import { Button } from '../components/common/Button';
-import type { QuestionRuntimeState } from '../types/session';
+import { initialMediaState, type QuestionRuntimeState } from '../types/session';
 import styles from './PreviewPage.module.css';
 
-type Mode = 'welcome' | 'question' | 'leaderboard' | 'final';
+type Mode = 'welcome' | 'round' | 'question' | 'leaderboard' | 'final';
+type View = 'audience' | 'presenter';
 
 export function PreviewPage() {
   const { quizId } = useParams<{ quizId: string }>();
   const quiz = useQuizStore((s) => s.quizzes.find((q) => q.id === quizId));
 
   const [mode, setMode] = useState<Mode>('welcome');
+  const [view, setView] = useState<View>('audience');
   const [index, setIndex] = useState(0);
   const [hintRevealed, setHintRevealed] = useState(false);
   const [answerRevealed, setAnswerRevealed] = useState(false);
   const [timerRunning, setTimerRunning] = useState(false);
 
+  const roundInfo = useMemo(() => (quiz ? getRoundInfo(quiz.questions, index) : null), [quiz, index]);
+
   const sampleStandings = useMemo(
     () => (quiz ? computeStandings(quiz.teams, [
-      ...quiz.teams.map((t, i) => ({ id: `s${i}`, teamId: t.id, questionIndex: null, delta: (quiz.teams.length - i) * 15, timestamp: '' })),
+      ...quiz.teams.map((t, i) => {
+        const delta = (quiz.teams.length - i) * 15;
+        return { id: `s${i}`, teamId: t.id, questionIndex: null, round: '', delta, previousScore: 0, newScore: delta, timestamp: '' };
+      }),
     ]) : []),
     [quiz]
   );
@@ -51,6 +60,7 @@ export function PreviewPage() {
         hintRevealed,
         answerRevealed,
         skipped: false,
+        media: initialMediaState(),
       }
     : null;
 
@@ -61,6 +71,8 @@ export function PreviewPage() {
     question,
     runtimeState,
     showLeaderboard: mode === 'leaderboard',
+    roundBanner: mode === 'round' ? 'intro' : 'none',
+    roundInfo,
     standings: sampleStandings,
     progress: { current: index + 1, total: quiz.questions.length || 1 },
   };
@@ -77,12 +89,24 @@ export function PreviewPage() {
       ) : (
         <>
           <div className={styles.stageBox}>
-            <PresentationStage vm={vm} isPreview />
+            {mode === 'question' && view === 'presenter' && question && runtimeState ? (
+              <PresenterPreviewPanel
+                quiz={quiz}
+                question={question}
+                runtimeState={runtimeState}
+                onToggleTimer={() => setTimerRunning((v) => !v)}
+                onToggleHint={() => setHintRevealed((v) => !v)}
+                onToggleAnswer={() => setAnswerRevealed((v) => !v)}
+              />
+            ) : (
+              <PresentationStage vm={vm} isPreview />
+            )}
           </div>
 
           <div className={styles.controls}>
             <div className={styles.group}>
               <Button size="sm" onClick={() => setMode('welcome')}>Welcome</Button>
+              <Button size="sm" onClick={() => setMode('round')} disabled={!roundInfo}>Round intro</Button>
               <Button size="sm" onClick={() => goTo(Math.max(0, index - 1))} disabled={mode === 'question' && index === 0}>← Prev question</Button>
               <span className={styles.count}>{index + 1} / {quiz.questions.length}</span>
               <Button size="sm" onClick={() => goTo(Math.min(quiz.questions.length - 1, index + 1))}>Next question →</Button>
@@ -90,17 +114,23 @@ export function PreviewPage() {
               <Button size="sm" onClick={() => setMode('final')}>Final results</Button>
             </div>
             {mode === 'question' && (
-              <div className={styles.group}>
-                <Button size="sm" variant={timerRunning ? 'primary' : 'secondary'} onClick={() => setTimerRunning((v) => !v)}>
-                  {timerRunning ? 'Timer running' : 'Start timer'}
-                </Button>
-                <Button size="sm" variant={hintRevealed ? 'primary' : 'secondary'} onClick={() => setHintRevealed((v) => !v)} disabled={!question?.hint}>
-                  {hintRevealed ? 'Hint shown' : 'Show hint'}
-                </Button>
-                <Button size="sm" variant={answerRevealed ? 'primary' : 'secondary'} onClick={() => setAnswerRevealed((v) => !v)}>
-                  {answerRevealed ? 'Answer shown' : 'Reveal answer'}
-                </Button>
-              </div>
+              <>
+                <div className={styles.group}>
+                  <Button size="sm" variant={view === 'audience' ? 'primary' : 'secondary'} onClick={() => setView('audience')}>Audience view</Button>
+                  <Button size="sm" variant={view === 'presenter' ? 'primary' : 'secondary'} onClick={() => setView('presenter')}>Presenter view</Button>
+                </div>
+                <div className={styles.group}>
+                  <Button size="sm" variant={timerRunning ? 'primary' : 'secondary'} onClick={() => setTimerRunning((v) => !v)}>
+                    {timerRunning ? 'Timer running' : 'Start timer'}
+                  </Button>
+                  <Button size="sm" variant={hintRevealed ? 'primary' : 'secondary'} onClick={() => setHintRevealed((v) => !v)} disabled={!question?.hint}>
+                    {hintRevealed ? 'Hint shown' : 'Show hint'}
+                  </Button>
+                  <Button size="sm" variant={answerRevealed ? 'primary' : 'secondary'} onClick={() => setAnswerRevealed((v) => !v)}>
+                    {answerRevealed ? 'Answer shown' : 'Reveal answer'}
+                  </Button>
+                </div>
+              </>
             )}
           </div>
         </>

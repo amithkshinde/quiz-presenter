@@ -5,5 +5,12 @@
 .dot { width: 6px; height: 6px; border-radius: 50%; background: var(--c-border-strong); flex: none; }
 .dotCurrent { background: var(--secondary-300); box-shadow: 0 0 6px var(--secondary-300); }
 .dotDone { background: var(--success-bright); }
-.label { font-family: var(--font-mono); font-size: 0.74rem; color: var(--c-ink-dim); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.dotUnscored { background: var(--warning); }
+.dotSkipped { background: var(--c-border-strong); border: 1px solid var(--c-ink-faint); }
+.label { font-family: var(--font-mono); font-size: 0.74rem; color: var(--c-ink-dim); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; flex: 1; }
 .current .label { color: var(--c-ink); }
+.unscoredBadge { color: var(--warning); font-size: 0.6rem; flex: none; }
+.roundDivider {
+  font-family: var(--font-mono); font-size: 0.62rem; text-transform: uppercase; letter-spacing: 0.06em; color: var(--c-ink-faint);
+  padding: 10px 10px 3px;
+}

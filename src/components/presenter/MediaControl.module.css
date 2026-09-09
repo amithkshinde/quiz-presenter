@@ -1,0 +1,44 @@
+.wrap { display: flex; flex-direction: column; gap: 8px; }
+.videoEl { width: 100%; max-height: 260px; border-radius: 8px; border: 1px solid var(--c-border); background: #000; }
+
+.controls {
+  display: flex; align-items: center; gap: 8px; background: var(--c-panel-2);
+  border: 1px solid var(--c-border); border-radius: 8px; padding: 8px 12px; flex-wrap: wrap;
+}
+.iconBtn {
+  width: 32px; height: 32px; border-radius: 8px; background: var(--primary-500); border: 1px solid var(--primary-500);
+  color: #2a1e05; cursor: pointer; font-size: 0.75rem; display: flex; align-items: center; justify-content: center; flex: none;
+}
+.iconBtn:hover { background: var(--primary-300); }
+.iconBtnGhost {
+  width: 28px; height: 28px; border-radius: 8px; background: transparent; border: 1px solid var(--c-border-strong);
+  color: var(--c-ink-dim); cursor: pointer; font-size: 0.72rem; display: flex; align-items: center; justify-content: center; flex: none;
+}
+.iconBtnGhost:hover { color: var(--c-ink); border-color: var(--c-ink-dim); }
+.time { font-family: var(--font-mono); font-size: 0.7rem; color: var(--c-ink-faint); flex: none; min-width: 34px; text-align: center; }
+.seek { flex: 1; min-width: 80px; accent-color: var(--primary-500); }
+.volume { width: 70px; flex: none; accent-color: var(--primary-500); }
+.volumeIcon { font-size: 0.8rem; flex: none; }
+
+.skippedNote { font-size: 0.82rem; color: var(--c-ink-faint); font-style: italic; }
+
+.errorBox {
+  display: flex; flex-direction: column; align-items: center; gap: 8px; text-align: center;
+  background: var(--error-soft); border: 1px solid var(--error); border-radius: 8px; padding: 16px; color: var(--error);
+}
+.errorIcon { font-size: 1.2rem; }
+.errorActions { display: flex; gap: 6px; flex-wrap: wrap; justify-content: center; }
+
+.endedBox {
+  display: flex; flex-direction: column; align-items: center; gap: 8px; text-align: center;
+  background: var(--c-panel-2); border: 1px solid var(--c-border-strong); border-radius: 8px; padding: 16px;
+}
+.endedTitle { font-family: var(--font-mono); font-size: 0.8rem; letter-spacing: 0.04em; color: var(--c-ink); }
+.endedActions { display: flex; gap: 6px; flex-wrap: wrap; justify-content: center; }
+
+.pill, .pillPrimary, .pillGhost {
+  border-radius: 99px; padding: 6px 14px; font-size: 0.78rem; cursor: pointer; border: 1px solid var(--c-border-strong); background: transparent; color: var(--c-ink-dim);
+}
+.pill:hover, .pillGhost:hover { color: var(--c-ink); border-color: var(--c-ink-dim); }
+.pillPrimary { background: var(--primary-500); border-color: var(--primary-500); color: #2a1e05; }
+.pillPrimary:hover { background: var(--primary-300); }

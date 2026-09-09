@@ -1,0 +1,11 @@
+.wrap { display: flex; flex-direction: column; gap: var(--space-3); margin-bottom: var(--space-6); }
+.summary { font-family: var(--font-mono); font-size: 0.82rem; color: var(--ink-dim); }
+.status { font-weight: 700; font-size: 0.92rem; padding: 10px 14px; border-radius: var(--radius-md); letter-spacing: 0.02em; }
+.statusReady { background: var(--success-soft); color: var(--success); }
+.statusBlocked { background: var(--error-soft); color: var(--error); }
+
+.list { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 6px; }
+.critical { font-size: 0.86rem; color: var(--error); }
+.warning { font-size: 0.86rem; color: var(--warning); }
+.toggle { align-self: flex-start; background: none; border: none; color: var(--ink-dim); font-size: 0.82rem; cursor: pointer; padding: 2px 0; }
+.toggle:hover { color: var(--ink); }

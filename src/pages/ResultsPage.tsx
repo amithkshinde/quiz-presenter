@@ -43,6 +43,8 @@ export function ResultsPage() {
     question: null,
     runtimeState: null,
     showLeaderboard: false,
+    roundBanner: 'none',
+    roundInfo: null,
     standings,
     progress: { current: session.questionIds.length, total: session.questionIds.length },
   };

@@ -4,6 +4,7 @@ import { useSessionStore } from '../state/sessionStore';
 import { useQuizStore } from '../state/quizStore';
 import { createPresenceChannel } from '../state/sync';
 import { getCurrentQuestion, getRuntimeState, getStandings, questionProgress } from '../state/derive';
+import { getRoundInfo } from '../utils/rounds';
 import { useTimedOut } from '../hooks/useTimedOut';
 import { PresentationStage, type PresentationViewModel } from '../components/presentation/PresentationStage';
 import styles from './DisplayPage.module.css';
@@ -81,6 +82,8 @@ export function DisplayPage() {
     question,
     runtimeState,
     showLeaderboard: session.showLeaderboard,
+    roundBanner: session.roundBanner ?? 'none',
+    roundInfo: getRoundInfo(quiz.questions, session.currentQuestionIndex),
     standings: getStandings(quiz, session),
     progress: questionProgress(session),
   };

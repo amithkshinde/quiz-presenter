@@ -1,9 +1,11 @@
 import type { Question } from '../../types/quiz';
-import type { QuestionRuntimeState, QuizPhase, TeamStanding } from '../../types/session';
+import type { QuestionRuntimeState, QuizPhase, RoundBannerState, TeamStanding } from '../../types/session';
+import type { RoundInfo } from '../../utils/rounds';
 import { WelcomeSlate } from './WelcomeSlate';
 import { QuestionSlate } from './QuestionSlate';
 import { LeaderboardSlate } from './LeaderboardSlate';
 import { PausedSlate } from './PausedSlate';
+import { RoundIntroSlate } from './RoundIntroSlate';
 import styles from './PresentationStage.module.css';
 
 export interface PresentationViewModel {
@@ -13,6 +15,8 @@ export interface PresentationViewModel {
   question: Question | null;
   runtimeState: QuestionRuntimeState | null;
   showLeaderboard: boolean;
+  roundBanner: RoundBannerState;
+  roundInfo: RoundInfo | null;
   standings: TeamStanding[];
   progress: { current: number; total: number };
 }
@@ -27,7 +31,7 @@ export function PresentationStage({ vm, isPreview = false }: { vm: PresentationV
   // Keyed on what actually changes the scene (which question, which slate) —
   // not on hint/answer/timer ticks within a question, so only a genuine
   // question change gets the cross-fade; reveals keep their own transitions.
-  const sceneKey = `${vm.phase}:${vm.question?.id ?? 'none'}:${vm.showLeaderboard}`;
+  const sceneKey = `${vm.phase}:${vm.question?.id ?? 'none'}:${vm.showLeaderboard}:${vm.roundBanner}`;
   return (
     <div className={`stage-scope ${styles.frame}`}>
       {isPreview && <span className={styles.previewBadge}>PREVIEW</span>}
@@ -48,6 +52,17 @@ function renderContent(vm: PresentationViewModel) {
   }
   if (vm.phase === 'ended') {
     return <LeaderboardSlate standings={vm.standings} final />;
+  }
+  if (vm.roundBanner !== 'none' && vm.roundInfo) {
+    return (
+      <RoundIntroSlate
+        roundNumber={vm.roundInfo.roundNumber}
+        totalRounds={vm.roundInfo.totalRounds}
+        category={vm.roundInfo.category}
+        questionCount={vm.roundInfo.count}
+        complete={vm.roundBanner === 'complete'}
+      />
+    );
   }
   if (vm.showLeaderboard) {
     return <LeaderboardSlate standings={vm.standings} caption={`Standings after Question ${vm.progress.current}`} />;

@@ -14,7 +14,12 @@
 .rowPos { background: var(--success-soft); border-color: var(--success); }
 .rowNeg { background: var(--error-soft); border-color: var(--error); }
 .rank { font-family: var(--font-mono); font-size: 0.72rem; color: var(--c-ink-faint); width: 12px; flex: none; }
+.avatar { width: 22px; height: 22px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 0.7rem; flex: none; }
 .name { flex: 1; min-width: 0; font-size: 0.86rem; color: var(--c-ink); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.changeTag { font-family: var(--font-mono); font-size: 0.68rem; font-weight: 600; padding: 2px 6px; border-radius: 5px; flex: none; }
+.changeTag.pos { color: var(--success); background: var(--success-soft); }
+.changeTag.neg { color: var(--error); background: var(--error-soft); }
+.streakTag { font-size: 0.7rem; flex: none; }
 .scoreWrap { position: relative; flex: none; }
 .score { font-family: var(--font-mono); font-weight: 600; color: var(--c-ink); font-variant-numeric: tabular-nums; }
 .delta {
@@ -63,6 +68,8 @@
 .log { list-style: none; margin: 0; padding: 8px 0 0; display: flex; flex-direction: column; gap: 6px; border-top: 1px solid var(--c-border); }
 .logRow { display: flex; align-items: center; gap: 8px; font-size: 0.76rem; color: var(--c-ink-dim); }
 .logRow .logName { flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.logMeta { color: var(--c-ink-faint); }
+.logTrail { font-family: var(--font-mono); font-size: 0.7rem; color: var(--c-ink-faint); flex: none; }
 .logDelta { font-family: var(--font-mono); font-weight: 600; }
 .logUndo { background: none; border: none; color: var(--secondary-300); font-size: 0.72rem; cursor: pointer; flex: none; }
 .logEmpty { font-size: 0.76rem; color: var(--c-ink-faint); padding: 6px 0; }

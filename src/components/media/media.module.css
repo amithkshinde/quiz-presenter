@@ -1,0 +1,61 @@
+.hiddenInput { display: none; }
+
+.dropzone {
+  display: flex; flex-direction: column; align-items: center; gap: 6px; text-align: center;
+  border: 1.5px dashed var(--border-strong); border-radius: var(--radius-md);
+  padding: var(--space-4); cursor: pointer; color: var(--ink-dim); font-size: 0.86rem;
+  background: var(--surface-2);
+}
+.dropzone:hover { border-color: var(--accent); }
+.dropzoneActive { border-color: var(--accent); background: var(--surface); }
+.dropzoneIcon { font-size: 1.4rem; }
+.stateHint { color: var(--ink-faint); font-size: 0.76rem; }
+.errorText { color: var(--error); font-size: 0.8rem; }
+
+.stateBox {
+  display: flex; flex-direction: column; align-items: center; gap: 6px; text-align: center;
+  border: 1px solid var(--border); border-radius: var(--radius-md); padding: var(--space-4);
+  background: var(--surface-2); font-size: 0.86rem; color: var(--ink-dim);
+}
+.stateIcon { font-size: 1.2rem; }
+.stateFailed { border-color: var(--error); color: var(--error); }
+
+.filename { font-size: 0.86rem; color: var(--ink); word-break: break-all; }
+.metaSmall { font-size: 0.74rem; color: var(--ink-faint); }
+
+.progressTrack { width: 100%; max-width: 220px; height: 6px; border-radius: 3px; background: var(--border); overflow: hidden; }
+.progressFill { height: 100%; background: var(--accent); transition: width 0.15s ease; }
+
+.previewCard {
+  display: flex; flex-direction: column; gap: 8px; align-items: flex-start;
+  border: 1px solid var(--border); border-radius: var(--radius-md); padding: var(--space-3);
+  background: var(--surface);
+}
+.thumb { max-width: 100%; max-height: 160px; border-radius: var(--radius-sm); object-fit: contain; }
+.player { width: 100%; max-height: 200px; }
+.previewMeta { display: flex; flex-direction: column; gap: 2px; }
+.previewActions { display: flex; gap: 6px; }
+
+.modalOverlay { position: fixed; inset: 0; background: rgba(10,12,17,.5); display: flex; align-items: center; justify-content: center; z-index: 100; padding: var(--space-4); }
+.modalHeader { display: flex; justify-content: space-between; align-items: center; padding: var(--space-4) var(--space-6); border-bottom: 1px solid var(--border); }
+.modalHeader h3 { font-size: 1.05rem; }
+.modalClose { background: none; border: none; color: var(--ink-dim); cursor: pointer; font-size: 1rem; }
+
+.libraryModal { background: var(--surface); border-radius: var(--radius-lg); width: 100%; max-width: 720px; max-height: 82vh; display: flex; flex-direction: column; box-shadow: 0 20px 60px -20px rgba(0,0,0,.4); }
+.libraryToolbar { display: flex; justify-content: space-between; align-items: center; gap: var(--space-3); padding: var(--space-3) var(--space-6); border-bottom: 1px solid var(--border); flex-wrap: wrap; }
+.libraryTabs { display: flex; gap: 4px; }
+.libraryTab { background: none; border: 1px solid var(--border); border-radius: var(--radius-sm); padding: 6px 12px; font-size: 0.8rem; color: var(--ink-dim); cursor: pointer; }
+.libraryTabActive { background: var(--accent); border-color: var(--accent); color: var(--accent-ink, #fff); }
+.searchInput { border: 1px solid var(--border-strong); border-radius: var(--radius-sm); padding: 6px 10px; font-size: 0.82rem; min-width: 180px; }
+
+.libraryGrid { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: var(--space-3); padding: var(--space-4) var(--space-6); overflow-y: auto; }
+.emptyLibrary { color: var(--ink-faint); font-size: 0.86rem; grid-column: 1 / -1; text-align: center; padding: var(--space-6) 0; }
+.libraryCard { display: flex; flex-direction: column; gap: 4px; border: 1px solid var(--border); border-radius: var(--radius-md); padding: var(--space-2); background: var(--surface-2); position: relative; }
+.libraryThumb { display: flex; align-items: center; justify-content: center; height: 90px; border-radius: var(--radius-sm); background: var(--surface); overflow: hidden; cursor: pointer; font-size: 1.6rem; }
+.libraryThumb img { width: 100%; height: 100%; object-fit: cover; }
+.libraryActions { display: flex; gap: 4px; flex-wrap: wrap; }
+.usageBadge { font-size: 0.68rem; color: var(--warning, #b45309); }
+
+.previewOverlayCard { background: var(--surface); border-radius: var(--radius-lg); padding: var(--space-4); display: flex; flex-direction: column; gap: var(--space-3); align-items: center; max-width: 90vw; }
+
+.pickerToggle { display: flex; gap: 8px; }

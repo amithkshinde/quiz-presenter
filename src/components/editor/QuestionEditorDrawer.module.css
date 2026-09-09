@@ -27,5 +27,16 @@
 .optionRow { display: flex; align-items: center; gap: var(--space-2); }
 .removeOpt { background: none; border: none; color: var(--ink-faint); cursor: pointer; padding: 4px; }
 .removeOpt:disabled { opacity: 0.3; cursor: not-allowed; }
+.reorderOpt { background: none; border: 1px solid var(--border); border-radius: 6px; width: 22px; height: 22px; color: var(--ink-dim); cursor: pointer; flex: none; }
+.reorderOpt:disabled { opacity: 0.3; cursor: not-allowed; }
+
+.previewAv { margin-top: var(--space-2); width: 100%; }
+.checkboxRow { display: flex; align-items: center; gap: 8px; font-size: 0.86rem; color: var(--ink); }
+.warnings { font-size: 0.8rem; color: var(--warning); background: var(--warning-soft); border-radius: var(--radius-sm); padding: 8px 10px; margin: -8px 0 0; }
+
+.advancedToggle { align-self: flex-start; background: none; border: none; color: var(--secondary-500); font-size: 0.82rem; cursor: pointer; padding: 0; }
+
+.footer { display: flex; justify-content: space-between; align-items: center; padding: var(--space-3) var(--space-6); border-top: 1px solid var(--border); gap: var(--space-2); flex-wrap: wrap; }
+.footerLeft, .footerRight { display: flex; gap: var(--space-2); }
 
 .autosave { text-align: center; padding: var(--space-2); font-size: 0.72rem; color: var(--ink-faint); }

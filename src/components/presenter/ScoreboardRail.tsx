@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import type { Team } from '../../types/quiz';
 import type { ScoreEvent } from '../../types/session';
-import { standings, recentEvents } from '../../utils/scoring';
+import { standings, recentEvents, changeFromPreviousQuestion, computeStreak } from '../../utils/scoring';
 import { useQuizStore, newTeamNameSuggestion } from '../../state/quizStore';
 import { useToast } from '../common/ToastProvider';
 import { ScoreNumber } from './ScoreNumber';
@@ -21,6 +21,8 @@ export function ScoreboardRail({
   quizId,
   teams,
   scoreEvents,
+  currentQuestionIndex,
+  round,
   onAdjust,
   onUndo,
   showLeaderboard,
@@ -29,7 +31,9 @@ export function ScoreboardRail({
   quizId: string;
   teams: Team[];
   scoreEvents: ScoreEvent[];
-  onAdjust: (teamId: string, delta: number) => string;
+  currentQuestionIndex: number;
+  round: string;
+  onAdjust: (teamId: string, delta: number, round?: string) => string;
   onUndo: (eventId: string) => void;
   showLeaderboard: boolean;
   onToggleLeaderboard: () => void;
@@ -46,7 +50,7 @@ export function ScoreboardRail({
 
   function handleAdjust(teamId: string, teamName: string, delta: number) {
     const fromScore = ranked.find((t) => t.teamId === teamId)?.score ?? 0;
-    const eventId = onAdjust(teamId, delta);
+    const eventId = onAdjust(teamId, delta, round);
     setOpenTeamId(null);
     setFlash({ teamId, delta, fromScore, key: Date.now() });
     window.setTimeout(() => setFlash((f) => (f?.teamId === teamId ? null : f)), FLASH_MS);
@@ -87,13 +91,19 @@ export function ScoreboardRail({
         <ul className={styles.list}>
           {ranked.map((team) => {
             const isFlashing = flash?.teamId === team.teamId;
+            const fullTeam = teams.find((t) => t.id === team.teamId);
+            const change = changeFromPreviousQuestion(scoreEvents, team.teamId, currentQuestionIndex);
+            const streak = computeStreak(scoreEvents, team.teamId);
             return (
               <li
                 key={team.teamId}
                 className={[styles.row, isFlashing ? (flash!.delta > 0 ? styles.rowPos : styles.rowNeg) : ''].join(' ')}
               >
                 <span className={styles.rank}>{team.rank}</span>
+                {fullTeam && <span className={styles.avatar} style={{ background: fullTeam.color }}>{fullTeam.avatar}</span>}
                 <span className={styles.name}>{team.name}</span>
+                {change !== 0 && <span className={`${styles.changeTag} ${change > 0 ? styles.pos : styles.neg}`}>{change > 0 ? `+${change}` : change}</span>}
+                {streak >= 2 && <span className={styles.streakTag} title={`${streak}-question scoring streak`}>🔥{streak}</span>}
                 <span className={styles.scoreWrap}>
                   <span className={styles.score}>
                     <ScoreNumber value={team.score} from={isFlashing ? flash!.fromScore : undefined} />
@@ -158,9 +168,14 @@ export function ScoreboardRail({
           <ul className={styles.log}>
             {recent.map((e) => {
               const team = teams.find((t) => t.id === e.teamId);
+              const startingScore = team?.startingScore ?? 0;
               return (
                 <li key={e.id} className={styles.logRow}>
-                  <span className={styles.logName}>{team?.name ?? 'Unknown'}</span>
+                  <span className={styles.logName}>
+                    {team?.name ?? 'Unknown'}
+                    {e.questionIndex !== null && <span className={styles.logMeta}> · Q{e.questionIndex + 1}{e.round ? ` · ${e.round}` : ''}</span>}
+                  </span>
+                  <span className={styles.logTrail}>{startingScore + (e.previousScore ?? 0)} → {startingScore + (e.newScore ?? 0)}</span>
                   <span className={styles.logDelta} style={{ color: e.delta > 0 ? 'var(--success)' : 'var(--error)' }}>
                     {e.delta > 0 ? `+${e.delta}` : e.delta}
                   </span>

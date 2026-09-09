@@ -1,21 +1,26 @@
-import { useState } from 'react';
+import { useMemo, useState } from 'react';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import { useQuizStore } from '../state/quizStore';
 import { useSessionStore } from '../state/sessionStore';
+import { useMediaStore } from '../state/mediaStore';
 import { getActiveSessionId } from '../state/activeSessions';
-import { isQuizReady } from '../types/quiz';
+import { runPreflightCheck } from '../utils/preflight';
 import { Button } from '../components/common/Button';
+import { PreflightPanel } from '../components/launch/PreflightPanel';
 import styles from './LaunchPage.module.css';
 
 export function LaunchPage() {
   const { quizId } = useParams<{ quizId: string }>();
   const quiz = useQuizStore((s) => s.quizzes.find((q) => q.id === quizId));
+  const mediaAssets = useMediaStore((s) => s.assets);
   const startSession = useSessionStore((s) => s.startSession);
   const navigate = useNavigate();
   const [displayOpened, setDisplayOpened] = useState(false);
   const [sessionId, setSessionId] = useState<string | null>(null);
 
-  if (!quiz) {
+  const report = useMemo(() => (quiz ? runPreflightCheck(quiz, mediaAssets) : null), [quiz, mediaAssets]);
+
+  if (!quiz || !report) {
     return (
       <div className={styles.page}>
         <p>Quiz not found. <Link to="/">Back to library</Link></p>
@@ -23,7 +28,7 @@ export function LaunchPage() {
     );
   }
 
-  const { ready, reasons } = isQuizReady(quiz);
+  const ready = report.ready;
   // A session already running for this quiz (e.g. the host left this page and
   // came back) takes priority over minting a new one — otherwise the original
   // keeps running with nothing pointing back at it. See: senior product
@@ -58,19 +63,23 @@ export function LaunchPage() {
       </p>
 
       <div className={styles.checklist}>
-        <ChecklistItem ok={quiz.teams.length > 0} label={`${quiz.teams.length} team${quiz.teams.length !== 1 ? 's' : ''} added`} />
-        <ChecklistItem ok={quiz.questions.length > 0 && ready} label={`${quiz.questions.length} question${quiz.questions.length !== 1 ? 's' : ''} ready`} />
         <ChecklistItem ok={displayOpened} label={displayOpened ? 'Presentation Display connected' : 'Presentation Display not yet opened'} optional />
       </div>
 
-      {!ready && <p className={styles.blocked}>Not ready: {reasons.join(' · ')} — <Link to={`/quizzes/${quiz.id}/edit`}>fix in editor</Link></p>}
+      <PreflightPanel report={report} />
+
+      {!ready && (
+        <p className={styles.blocked}>
+          Fix the critical issues above before going live — <Link to={`/quizzes/${quiz.id}/edit`}>open the editor</Link>.
+        </p>
+      )}
 
       <div className={styles.actions}>
         <Button onClick={openDisplay} disabled={!ready}>
           {displayOpened ? 'Reopen Presentation Display' : 'Open Presentation Display'}
         </Button>
         <Button variant="primary" onClick={enterConsole} disabled={!ready}>
-          {resuming ? 'Rejoin Presenter Console →' : 'Enter Presenter Console →'}
+          {resuming ? 'Rejoin Presenter Console →' : 'Start Quiz →'}
         </Button>
       </div>
       <p className={styles.hint}>Drag the Presentation Display window to your projector or TV, then enter the Presenter Console to go live.</p>

@@ -39,7 +39,8 @@
 .navRail { border-right: 1px solid var(--c-border); background: var(--c-panel); padding: 10px; overflow-y: auto; }
 .scoreRail { border-left: 1px solid var(--c-border); background: var(--c-panel); padding: 14px; overflow-y: auto; }
 .stage { padding: 24px 28px; overflow-y: auto; display: flex; flex-direction: column; justify-content: center; gap: 20px; }
-.cards { display: flex; gap: 12px; }
+.cards { display: flex; gap: 12px; flex-wrap: wrap; }
+.cards > * { min-width: 220px; }
 .stageError { margin: auto; max-width: 40ch; text-align: center; color: var(--c-ink-dim); display: flex; flex-direction: column; gap: 8px; }
 .stageErrorHint { font-size: 0.85rem; color: var(--c-ink-faint); }
 

@@ -8,9 +8,10 @@ import { Badge } from '../components/common/Badge';
 import { QuestionList } from '../components/editor/QuestionList';
 import { QuestionEditorDrawer } from '../components/editor/QuestionEditorDrawer';
 import { TeamsPanel } from '../components/editor/TeamsPanel';
+import { ScoreConfigPanel } from '../components/editor/ScoreConfigPanel';
 import styles from './EditorPage.module.css';
 
-type Tab = 'questions' | 'teams';
+type Tab = 'questions' | 'teams' | 'scoring';
 
 export function EditorPage() {
   const { quizId } = useParams<{ quizId: string }>();
@@ -66,6 +67,9 @@ export function EditorPage() {
         <button className={`${styles.tab} ${tab === 'teams' ? styles.tabActive : ''}`} onClick={() => setTab('teams')}>
           Teams ({quiz.teams.length})
         </button>
+        <button className={`${styles.tab} ${tab === 'scoring' ? styles.tabActive : ''}`} onClick={() => setTab('scoring')}>
+          Scoring
+        </button>
       </nav>
 
       {!ready && (
@@ -74,13 +78,16 @@ export function EditorPage() {
 
       {tab === 'questions' ? (
         <QuestionList quiz={quiz} onEdit={setActiveQuestionId} />
-      ) : (
+      ) : tab === 'teams' ? (
         <TeamsPanel quiz={quiz} />
+      ) : (
+        <ScoreConfigPanel quiz={quiz} />
       )}
 
       <QuestionEditorDrawer
         quiz={quiz}
         questionId={activeQuestionId}
+        onSwitchTo={setActiveQuestionId}
         onClose={() => setActiveQuestionId(null)}
       />
     </div>

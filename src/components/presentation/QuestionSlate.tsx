@@ -1,5 +1,7 @@
 import type { Question } from '../../types/quiz';
 import type { QuestionRuntimeState } from '../../types/session';
+import { useResolvedMediaUrl } from '../media/useResolvedMediaUrl';
+import { MediaSlate } from './MediaSlate';
 import { TimerReadout } from './TimerReadout';
 import styles from './QuestionSlate.module.css';
 
@@ -16,6 +18,7 @@ export function QuestionSlate({
 }) {
   const { hintRevealed, answerRevealed } = runtimeState;
   const showHint = hintRevealed && question.hint.trim().length > 0;
+  const mediaUrl = useResolvedMediaUrl(question);
 
   return (
     <div className={styles.wrap}>
@@ -32,9 +35,14 @@ export function QuestionSlate({
         )}
       </div>
 
-      {question.mediaUrl && (
+      {(question.type === 'audio' || question.type === 'video') && <MediaSlate question={question} media={runtimeState.media} />}
+      {question.type === 'image' && (
         <div className={styles.mediaWrap}>
-          <img className={styles.media} src={question.mediaUrl} alt={`Photo accompanying question ${progress.current}`} />
+          {mediaUrl ? (
+            <img className={styles.media} src={mediaUrl} alt={`Photo accompanying question ${progress.current}`} />
+          ) : (
+            <div className={styles.mediaFallback}>Image unavailable</div>
+          )}
         </div>
       )}
 
@@ -70,6 +78,13 @@ export function QuestionSlate({
         <div className={styles.hint}>
           <span className={styles.hintLabel}>Hint</span>
           <span className={styles.hintText}>{question.hint}</span>
+        </div>
+      )}
+
+      {answerRevealed && question.explanation?.trim() && (
+        <div className={styles.explanation}>
+          <span className={styles.explanationLabel}>Did you know?</span>
+          <span className={styles.explanationText}>{question.explanation}</span>
         </div>
       )}
     </div>

@@ -1,5 +1,5 @@
 import type { Quiz } from '../types/quiz';
-import { initialQuestionState, type QuestionRuntimeState, type QuizSession, type ScoreEvent } from '../types/session';
+import { initialMediaState, initialQuestionState, type QuestionRuntimeState, type QuizSession, type ScoreEvent } from '../types/session';
 import { makeId } from '../utils/id';
 import { setActiveSessionId, setLastResultsSessionId } from './activeSessions';
 
@@ -11,15 +11,23 @@ import { setActiveSessionId, setLastResultsSessionId } from './activeSessions';
  */
 function buildScoreEvents(quiz: Quiz, outcomes: number[][], startedAtMs: number): ScoreEvent[] {
   const events: ScoreEvent[] = [];
+  const running: Record<string, number> = {};
   let t = startedAtMs;
   outcomes.forEach((deltas, questionIndex) => {
     deltas.forEach((delta, teamIndex) => {
       if (delta === 0) return;
+      const teamId = quiz.teams[teamIndex].id;
+      const previousScore = running[teamId] ?? 0;
+      const newScore = previousScore + delta;
+      running[teamId] = newScore;
       events.push({
         id: makeId('score'),
-        teamId: quiz.teams[teamIndex].id,
+        teamId,
         questionIndex,
+        round: quiz.questions[questionIndex]?.category || 'Round',
         delta,
+        previousScore,
+        newScore,
         timestamp: new Date(t).toISOString(),
       });
       t += 12000 + Math.floor(Math.random() * 8000);
@@ -58,7 +66,7 @@ const ENDED_OUTCOMES: number[][] = [
 ];
 
 function resolvedState(hintRevealed: boolean): QuestionRuntimeState {
-  return { timerStatus: 'expired', timerRemaining: 0, hintRevealed, answerRevealed: true, skipped: false };
+  return { timerStatus: 'expired', timerRemaining: 0, hintRevealed, answerRevealed: true, skipped: false, media: initialMediaState() };
 }
 
 /** A quiz mid-way through: questions 1-8 already played, question 9 live with the hint out and the clock almost gone. */
@@ -74,7 +82,7 @@ export function buildLiveSession(quiz: Quiz): QuizSession {
       // seconds of the page loading, giving nothing stable to inspect. Paused
       // at 4s keeps the "nearly expired" critical state on screen indefinitely
       // until the reviewer presses Resume themselves.
-      questionStates[q.id] = { timerStatus: 'paused', timerRemaining: 4, hintRevealed: true, answerRevealed: false, skipped: false };
+      questionStates[q.id] = { timerStatus: 'paused', timerRemaining: 4, hintRevealed: true, answerRevealed: false, skipped: false, media: initialMediaState() };
     }
     else questionStates[q.id] = initialQuestionState(q.timerSeconds); // untouched — "before hint" baseline
   });
@@ -88,6 +96,7 @@ export function buildLiveSession(quiz: Quiz): QuizSession {
     questionStates,
     scoreEvents: buildScoreEvents(quiz, LIVE_OUTCOMES, startedAtMs),
     showLeaderboard: false,
+    roundBanner: 'none',
     displayConnected: true,
     startedAt: new Date(startedAtMs).toISOString(),
     endedAt: null,
@@ -112,6 +121,7 @@ export function buildEndedSession(quiz: Quiz): QuizSession {
     questionStates,
     scoreEvents: buildScoreEvents(quiz, ENDED_OUTCOMES, startedAtMs),
     showLeaderboard: true,
+    roundBanner: 'none',
     displayConnected: true,
     startedAt: new Date(startedAtMs).toISOString(),
     endedAt: new Date(endedAtMs).toISOString(),

@@ -10,3 +10,4 @@
 .letter { font-family: var(--font-mono); width: 20px; height: 20px; border-radius: 50%; border: 1px solid var(--c-border); display: flex; align-items: center; justify-content: center; font-size: 0.68rem; flex: none; }
 .correctTag { margin-left: auto; font-family: var(--font-mono); font-size: 0.68rem; color: var(--success-bright); }
 .liveNote { font-family: var(--font-mono); font-size: 0.7rem; color: var(--error); }
+.mediaMissing { font-size: 0.82rem; color: var(--warning); background: var(--warning-soft); border-radius: 8px; padding: 10px 14px; margin: 0; }

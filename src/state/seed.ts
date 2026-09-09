@@ -39,10 +39,10 @@ export function seedQuiz(): Quiz {
     createdAt: now,
     updatedAt: now,
     teams: [
-      { id: makeId('team'), name: 'Team Alpha' },
-      { id: makeId('team'), name: 'Team Bravo' },
-      { id: makeId('team'), name: 'Team Charlie' },
-      { id: makeId('team'), name: 'Team Delta' },
+      { id: makeId('team'), name: 'Team Alpha', color: '#e5533c', avatar: '🦁', startingScore: 0, members: [] },
+      { id: makeId('team'), name: 'Team Bravo', color: '#3c7fe5', avatar: '🐯', startingScore: 0, members: [] },
+      { id: makeId('team'), name: 'Team Charlie', color: '#3cae5c', avatar: '🦅', startingScore: 0, members: [] },
+      { id: makeId('team'), name: 'Team Delta', color: '#e5b23c', avatar: '🐺', startingScore: 0, members: [] },
     ],
     questions: [
       // ---- Easy (10 pts) ----

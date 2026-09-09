@@ -1,0 +1,26 @@
+.wrap {
+  position: relative; background: var(--c-bg); color: var(--c-ink); padding: 20px; border-radius: 14px;
+  display: flex; flex-direction: column; gap: 12px; min-height: 480px;
+}
+.previewBadge {
+  position: absolute; top: 14px; right: 14px; font-family: var(--font-mono); font-size: 0.66rem; letter-spacing: 0.08em;
+  color: var(--primary-500); border: 1px solid var(--primary-500); border-radius: 99px; padding: 3px 10px;
+}
+.meta { display: flex; gap: 8px; }
+.tag { font-family: var(--font-mono); font-size: 0.7rem; padding: 3px 10px; border-radius: 99px; background: var(--c-panel-2); border: 1px solid var(--c-border); color: var(--c-ink-dim); }
+.media { max-width: 100%; max-height: 220px; border-radius: 8px; border: 1px solid var(--c-border); }
+.qtext { font-size: 1.4rem; font-weight: 600; margin: 0; }
+.options { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+.option { background: var(--c-panel-2); border: 1px solid var(--c-border); border-radius: 8px; padding: 8px 12px; font-size: 0.88rem; color: var(--c-ink-dim); }
+.correctOpt { border-color: var(--success-bright); color: var(--c-ink); }
+
+.cardRow { display: flex; gap: 12px; }
+.card { flex: 1; background: var(--c-panel-2); border: 1px solid var(--c-border); border-radius: 10px; padding: 12px 14px; display: flex; flex-direction: column; gap: 6px; }
+.cardHead { display: flex; justify-content: space-between; align-items: center; font-family: var(--font-mono); font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.05em; color: var(--c-ink-faint); }
+.cardBody { font-size: 0.92rem; color: var(--c-ink); margin: 0; }
+.led { font-family: var(--font-mono); font-size: 0.68rem; color: var(--error); }
+.miniBtn { background: var(--c-panel-3); border: 1px solid var(--c-border-strong); border-radius: 6px; color: var(--c-ink-dim); font-size: 0.72rem; padding: 4px 10px; cursor: pointer; }
+.miniBtn:hover { color: var(--c-ink); }
+.miniBtn:disabled { opacity: 0.4; cursor: not-allowed; }
+
+.timerRow { display: flex; align-items: center; gap: 10px; font-family: var(--font-mono); font-size: 0.8rem; color: var(--c-ink-dim); margin-top: auto; }
